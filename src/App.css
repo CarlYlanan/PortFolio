@@ -1,4 +1,4 @@
-:root { --paper: #fdfbf7; --ink: #1a1a1a; --line: #e2ddd5; --muted: #706b64; }
+:root { --paper: #fdfbf7; --ink: #201f1c; --line: #b4a994; --muted: #3d3c38; }
 .site-shell { min-height: 100svh; background: var(--paper); color: var(--ink); }
 .site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); background: rgba(253, 251, 247, .92); backdrop-filter: blur(8px); }
 .navigation { display: flex; justify-content: center; gap: 12px; padding: 12px 16px; }
