@@ -5,7 +5,7 @@ export const setupContent: StandardTabContent = {
   sections: [
     {
       id: 'linux', title: 'Linux',
-      body: 'The daily desktop is built around a calm, fast Linux experience with a focus on keeping the interface minimal and the workflow quick. The system is designed to stay light, useful, and easy to maintain while still feeling personal enough to carry through the day.',
+      body: 'My desktop is built around CachyOS and a Niri-first workflow. The stack stays intentionally light: PipeWire handles the audio layer, rofi is the launcher, Waybar and a few scripts carry the interface, and wlogout gives the power screen a personal finish.',
       bullets: [
         { item: 'CachyOS', usage: 'Base system' },
         { item: 'PipeWire', usage: 'Audio layer', url: 'https://github.com/CarlYlanan/Desktop-Config/tree/main/pipewire/pipewire.conf.d' },
@@ -20,7 +20,7 @@ export const setupContent: StandardTabContent = {
     },
     {
       id: 'systems', title: 'Systems',
-      body: 'The workstation is built around a multi-monitor desk that aims to feel balanced, practical, and comfortable enough to stay in for long sessions. I like keeping the hardware side useful rather than decorative, so older consoles, a compact keyboard setup, personal audio gear, and a fast gaming-focused desktop all have a role in the same overall rhythm of the desk.',
+      body: 'The hardware side is mostly practical. An Xbox 360 runs an AbadUpdate softmod, the PlayStation 4 runs GoldHen, and the SNES Mini is rebuilt with Hakchi so older systems stay useful instead of turning into shelves. The desk also carries a compact workstation layer: a Monsgeek M1W v3 HE keyboard, a Pulsar X2h mini Muichiro, Beyerdynamic DT770 Pro headphones, Logitech G560 speakers, a Blue Yeti Nano microphone, and a Fosi F5 Pro DAC. The display setup is split between an MSI G274QPX QHD 240Hz monitor, and a Gigabyte G24F 165Hz display. The main tower lives in a Lian Li Dan A3 case with an AMD Ryzen 7 5700X, a Gigabyte RX 7700 XT, and a Crucial P3 1TB NVMe for the main storage layer.',
       bullets: [
         'Xbox 360 with AbadUpdate softmod.',
         'PlayStation 4 with GoldHen.',
@@ -33,12 +33,11 @@ export const setupContent: StandardTabContent = {
         'MSI G274QPX QHD 240Hz monitor.',
         'Gigabyte G24F 165Hz display.',
         'Lian Li Dan A3 chassis with Ryzen 7 5700X and RX 7700 XT.',
-        'Crucial P3 1TB NVMe storage.',
       ],
     },
     {
       id: 'server-networking', title: 'Server / Networking',
-      body: 'The network side is a small self-hosting layer that tries to keep personal services close to the desk while still remaining organized enough to use regularly. I keep a few services in motion for learning and daily use, with a mixture of privacy-minded tools, local media, and network filtering that helps everything feel a little more consistent.',
+      body: 'The network is split between a Raspberry Pi 8GB running Raspberry Pi OS Lite, a Cloudflare tunnel, Docker Compose, two Navidrome instances, and AdGuard Home for full-network ad blocking. The wireless layer uses a Xiaomi AX3000 mesh, a Netgear Nighthawk RAX50, and an Orbi WiFi 6 access point setup, with a separate isolated 5G network for VR gaming. There is also an IBM X3300 M4 rack server with 192GB DDR3 for cold storage and anything that needs to stay offline.',
       bullets: [
         'Raspberry Pi 8GB with Raspberry Pi OS Lite.',
         'Cloudflare tunnel and Docker Compose for the website.',
