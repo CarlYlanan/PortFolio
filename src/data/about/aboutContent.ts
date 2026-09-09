@@ -19,7 +19,7 @@ export const aboutContent: StandardTabContent = {
         'Built a document intake and triage workflow for clinical document processing.',
         'Separated patient notes from patient metadata before creating a diagnosis structure.',
         'Worked with text extraction and rules-based preprocessing for an LLM-assisted decision pipeline.',
-        'Helped prepare patient information into a final document suitable for doctor review.',
+        'Structured patient information into a final document suitable for doctor review.',
       ],
     },
     {
