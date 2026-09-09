@@ -3,8 +3,8 @@ import type { StandardTabContent } from '../../types'
 export const aboutContent: StandardTabContent = {
   id: 'about',
   eyebrow: 'About / 01',
-  title: 'Curious by nature, careful by craft.',
-  summary: 'A little context about the person behind the projects.',
+  title: 'Building systems, learning by doing.',
+  summary: 'A short look at the work, interests, and direction behind the projects.',
   sections: [
     {
       id: 'statement',
@@ -25,7 +25,13 @@ export const aboutContent: StandardTabContent = {
     {
       id: 'gaming',
       title: 'Gaming & Media',
-      body: 'I play a lot of video games, mostly rhythm and FPS games, with the occasional story-driven title. I am currently still in Natlan with Genshin Impact, and I spend time with osu! mostly in standard mode while starting to learn mania, Overwatch, Sound Voltex, and maimai. I am still learning maimai and SDVX, but I am getting to a decent level. I also read light novels, manhwa, and manga, and I have a long-running interest in Japanese media such as Sanrio, Hatsune Miku, Ado, 9Lana, and Kasane Teto. My all-time favourite manga is Haikyuu.',
+      body: 'I spend a lot of time with rhythm games, FPS games, and the occasional story-driven title. I usually keep a few games active at once, but I am most consistent with the games below.',
+      bullets: [
+        'Genshin Impact — still in Natlan, mostly playing around the story and taking breaks when I feel burnout.',
+        'osu! — mainly standard mode (Rank 7000 Global), with some learning in mania and other rhythm formats.',
+        'Overwatch, Sound Voltex, and maimai — active learning and casual play alongside osu! and Genshin Impact.',
+        'Light novels, manhwa, manga, and Japanese media — including Sanrio, Hatsune Miku, Ado, 9Lana, Kasane Teto, and Haikyuu.',
+      ],
     },
     {
       id: 'interests',
@@ -43,7 +49,7 @@ export const aboutContent: StandardTabContent = {
       title: 'Goals',
       body: 'My current goals are mostly practical and personal. I want to get back into badminton, reach a 600pp score in osu! at some point, clear a 14 master chart in maimai, get PUC in anything or clear an 18 in Sound Voltex, and eventually build a significant home server that can replace most of the cloud services I rely on today. The main career goal is to get a job, ideally in help desk or systems administration, and the technology goal is to build a home server that can cover the same needs as a cloud setup while staying private, understandable, and reliable.',
       bullets: [
-        'Return to badminton.',
+        'Get back into shape (Mainly by playing badminton).',
         'Reach a 600pp score in osu! someday.',
         'Clear a 14 master chart in maimai.',
         'Get PUC in anything or clear an 18 in Sound Voltex.',
@@ -54,13 +60,13 @@ export const aboutContent: StandardTabContent = {
     {
       id: 'skills',
       title: 'Skills',
-      body: 'I work mostly in the front-end space, but I care a great deal about the systems behind the interface: clear structure, readable code, and a simple path from idea to execution. I like working with React, TypeScript, CSS, Linux, and the way software can be shaped into a thoughtful web experience.',
+      body: 'While I studied and majored in data science, my strongest interest is in the hardware and systems side of technology. I enjoy working with servers, Linux environments, self-hosted services, containers, networking, and the practical work of keeping infrastructure running reliably. I am also learning front-end development to broaden my skills and avoid being locked into only the data science side of computing. I like building a stronger understanding of how software, systems, hardware, and user-facing tools fit together in a real environment.',
       bullets: [
-        { item: 'React', usage: 'Building front-end interfaces' },
-        { item: 'TypeScript', usage: 'Typed UI and application structure' },
-        { item: 'CSS', usage: 'Layout, spacing, and visual polish' },
-        { item: 'Linux', usage: 'Daily systems and workflow architecture' },
-        { item: 'Systems thinking', usage: 'Designing practical and maintainable tooling' },
+        { item: 'System Administration', usage: 'Linux, Ubuntu Server, Debian, CachyOS/Arch, Proxmox VE, SSH/VNC, systemd, permissions' },
+        { item: 'Infrastructure & DevOps', usage: 'Docker, Compose, reverse proxying, Nginx Proxy Manager, Cloudflare Tunnels, Tailscale' },
+        { item: 'Networking & Security', usage: 'DNS, DHCP/static IP, LAN/WAN, NFS/SMB, firewalls, port forwarding' },
+        { item: 'Data & Automation', usage: 'Python, PostgreSQL, LangChain, Ollama, Bash, Git/GitHub, JSON/YAML, PII anonymization' },
+        { item: 'Hardware & Tools', usage: 'IBM x3300 diagnostics, RAID/LVM, PC assembly and configuration' },
       ],
     },
   ],

@@ -10,7 +10,7 @@ export const navigationTabs: NavigationTab[] = [
   { id: 'about', label: 'About' },
   { id: 'larper', label: 'Larper' },
   { id: 'setup', label: 'Setup' },
-  { id: 'friends', label: 'Friends' },
+  { id: 'social', label: 'Social' },
 ]
 
 export const contentByTab: Record<TabId, TabContent> = {
@@ -18,5 +18,5 @@ export const contentByTab: Record<TabId, TabContent> = {
   about: aboutContent,
   larper: larperContent,
   setup: setupContent,
-  friends: friendsContent,
+  social: friendsContent,
 }

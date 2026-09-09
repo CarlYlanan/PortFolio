@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { contentByTab, navigationTabs } from './data/content'
-import type { BulletEntry, FriendsTabContent, StandardTabContent, TabId } from './types'
+import { MreowCarousel } from './mreow/mreow'
+import type { BulletEntry, SocialTabContent, StandardTabContent, TabId } from './types'
 
-function isFriendsContent(content: StandardTabContent | FriendsTabContent): content is FriendsTabContent {
-  return content.id === 'friends'
+function isSocialContent(content: StandardTabContent | SocialTabContent): content is SocialTabContent {
+  return content.id === 'social'
 }
 
 function App() {
@@ -56,9 +57,9 @@ function App() {
           <h1>{content.title}</h1>
           <p className="summary">{content.summary}</p>
           <div className="content-list">
-            {isFriendsContent(content)
-              ? content.friends.map((friend) => (
-                <article className="content-section friend-entry" id={friend.id} key={friend.id}>
+            {isSocialContent(content)
+              ? content.socials.map((friend) => (
+                <article className="content-section social-entry" id={friend.id} key={friend.id}>
                   <h2>{friend.name}</h2>
                   <a href={friend.url} rel="noreferrer" target="_blank">↳ {friend.url}</a>
                   <p>↳ {friend.reason}</p>
@@ -68,6 +69,9 @@ function App() {
                 <article className="content-section" id={section.id} key={section.id}>
                   <p className="section-label">{section.title}</p>
                   <p>{section.body}</p>
+                  {section.gallery && section.gallery.length > 0 && (
+                    <MreowCarousel items={section.gallery} mediaFolder={section.mediaFolder ?? '/media'} visibleBoxes={5} />
+                  )}
                   {section.bullets && section.bullets.length > 0 && (
                     <ul className="section-bullets">
                       {section.bullets.map((bullet: BulletEntry, index: number) => {
