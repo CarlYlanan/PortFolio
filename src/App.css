@@ -8,12 +8,12 @@
 .page-grid.page-blink { animation: pageBlink 780ms ease-in-out 1; }
 .main-column { width: 80%; min-width: 0; padding-bottom: 80px; }
 .eyebrow, .index-heading, .section-label { margin: 0; color: var(--muted); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
-h1 { max-width: none; margin: 26px 0 18px; font-size: clamp(28px, 4vw, 48px); font-weight: 400; letter-spacing: -.07em; line-height: 1.15; }
-.summary { max-width: none; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+h1 { max-width: none; margin: 26px 0 18px; font-size: clamp(28px, 4vw, 48px); font-weight: 600; letter-spacing: -.07em; line-height: 1.15; }
+.summary { max-width: none; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; font-weight: 600; }
 .content-list { margin-top: 100px; }
 .content-section { min-height: 180px; border-top: 1px solid var(--line); padding: 24px 0 70px; scroll-margin-top: 80px; transition: opacity .3s ease; }
-.content-section p:not(.section-label) { max-width: none; margin: 22px 0 0; font-size: 16px; line-height: 1.9; white-space: pre-line; }
-.section-bullets { margin: 16px 0 0 20px; padding: 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
+.content-section p:not(.section-label) { max-width: none; margin: 22px 0 0; font-size: 16px; line-height: 1.9; white-space: pre-line; font-weight: 600; }
+.section-bullets { margin: 16px 0 0 20px; padding: 0; color: var(--muted); font-size: 16px; line-height: 1.8; font-weight: 600; }
 .section-bullets li { margin: 8px 0; }
 .section-bullets a, .reference-list a, .root-link { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: color .24s ease, text-decoration-color .24s ease, opacity .24s ease; }
 .section-bullets a:visited, .reference-list a:visited, .root-link:visited { color: var(--muted); }
@@ -22,7 +22,7 @@ h1 { max-width: none; margin: 26px 0 18px; font-size: clamp(28px, 4vw, 48px); fo
 .section-bullets a:active, .reference-list a:active, .root-link:active { color: var(--muted); transition: color .3s ease; }
 .reference-section { margin-top: 22px; }
 .reference-heading { margin: 0 0 8px; color: var(--muted); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
-.reference-list { margin: 0; padding-left: 20px; color: var(--muted); font-size: 16px; line-height: 1.8; }
+.reference-list { margin: 0; padding-left: 20px; color: var(--muted); font-size: 16px; line-height: 1.8; font-weight: 600; }
 .reference-list li { margin: 4px 0; }
 .reference-link { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .reference-link:hover { color: var(--muted); }
