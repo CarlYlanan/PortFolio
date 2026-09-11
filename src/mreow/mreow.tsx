@@ -15,10 +15,19 @@ function publicAssetUrl(mediaFolder: string, src: string) {
   return `${root}/${file}`
 }
 
-export function MreowCarousel({ items, mediaFolder = '/media', visibleBoxes = 5, title = 'Gallery', sortOrder = 'asc' }: MreowCarouselProps) {
-  const [lightbox, setLightbox] = useState<{ mediaFolder: string; items: GalleryItem[] } | null>(null)
+function displayTitle(item: GalleryItem) {
+  if (item.title && item.title.trim().length > 0) {
+    return item.title
+  }
 
-  const cardWidth = `calc((100% - ${(visibleBoxes - 1) * 12}px) / ${visibleBoxes})`
+  const source = item.src ?? ''
+  const base = source.split('/').pop() ?? source
+  return base.replace(/\.[^/.]+$/, '') || 'Untitled media'
+}
+
+export function MreowCarousel({ items, mediaFolder = '/media', title = 'Gallery', sortOrder = 'asc' }: MreowCarouselProps) {
+  const [lightbox, setLightbox] = useState<{ mediaFolder: string; items: GalleryItem[] } | null>(null)
+  const [focusedImage, setFocusedImage] = useState<{ mediaFolder: string; item: GalleryItem } | null>(null)
 
   const sortedItems = useMemo(() => {
     const factor = sortOrder === 'desc' ? -1 : 1
@@ -32,21 +41,22 @@ export function MreowCarousel({ items, mediaFolder = '/media', visibleBoxes = 5,
       <div className="mreow-track">
         {sortedItems.map((item) => {
           const src = publicAssetUrl(mediaFolder, item.src)
+          const caption = displayTitle(item)
           return (
-            <figure className="mreow-card" key={item.title} style={{ flexBasis: cardWidth }}>
+            <figure className="mreow-card" key={`${caption}-${item.src}`}>
               {item.link ? (
-                <a className="mreow-open mreow-open-link" href={item.link} onClick={() => setLightbox({ mediaFolder, items: sortedItems })} rel="noreferrer" target="_blank">
-                  <div className="mreow-frame" style={{ aspectRatio: item.aspectRatio ?? '4 / 3' }}>
-                    <img className="mreow-image" alt={item.alt ?? item.title} src={src} />
+                <a className="mreow-open mreow-open-link" href={item.link} rel="noreferrer" target="_blank">
+                  <div className="mreow-frame">
+                    <img className="mreow-image" alt={item.alt ?? caption} src={src} />
                   </div>
-                  <figcaption className="mreow-caption">{item.title}</figcaption>
+                  <figcaption className="mreow-caption">{caption}</figcaption>
                 </a>
               ) : (
                 <button className="mreow-open" onClick={() => setLightbox({ mediaFolder, items: sortedItems })} type="button">
-                  <div className="mreow-frame" style={{ aspectRatio: item.aspectRatio ?? '4 / 3' }}>
-                    <img className="mreow-image" alt={item.alt ?? item.title} src={src} />
+                  <div className="mreow-frame">
+                    <img className="mreow-image" alt={item.alt ?? caption} src={src} />
                   </div>
-                  <figcaption className="mreow-caption">{item.title}</figcaption>
+                  <figcaption className="mreow-caption">{caption}</figcaption>
                 </button>
               )}
             </figure>
@@ -62,25 +72,48 @@ export function MreowCarousel({ items, mediaFolder = '/media', visibleBoxes = 5,
               <button className="mreow-modal-close" onClick={() => setLightbox(null)} type="button">×</button>
             </div>
             <div className="mreow-modal-grid">
-              {lightbox.items.map((image) => (
-                <figure className="mreow-modal-card" key={`${image.title}-${image.src}`}>
-                  {image.link ? (
-                    <a href={image.link} rel="noreferrer" target="_blank">
-                      <div className="mreow-modal-frame" style={{ aspectRatio: image.aspectRatio ?? '4 / 3' }}>
-                        <img className="mreow-modal-image" alt={image.alt ?? image.title} src={publicAssetUrl(lightbox.mediaFolder, image.src)} />
-                      </div>
-                      <figcaption className="mreow-modal-caption">{image.title}</figcaption>
-                    </a>
-                  ) : (
-                    <>
-                      <div className="mreow-modal-frame" style={{ aspectRatio: image.aspectRatio ?? '4 / 3' }}>
-                        <img className="mreow-modal-image" alt={image.alt ?? image.title} src={publicAssetUrl(lightbox.mediaFolder, image.src)} />
-                      </div>
-                      <figcaption className="mreow-modal-caption">{image.title}</figcaption>
-                    </>
-                  )}
-                </figure>
-              ))}
+              {lightbox.items.map((image) => {
+                const caption = displayTitle(image)
+                return (
+                  <figure className="mreow-modal-card" key={`${caption}-${image.src}`}>
+                    {image.link ? (
+                      <a href={image.link} rel="noreferrer" target="_blank">
+                        <div className="mreow-modal-frame">
+                          <img className="mreow-modal-image" alt={image.alt ?? caption} src={publicAssetUrl(lightbox.mediaFolder, image.src)} />
+                        </div>
+                        <figcaption className="mreow-modal-caption">{caption}</figcaption>
+                      </a>
+                    ) : (
+                      <button className="mreow-modal-open" onClick={() => {
+                        setFocusedImage({ mediaFolder: lightbox.mediaFolder, item: image })
+                        setLightbox(null)
+                      }} type="button">
+                        <div className="mreow-modal-frame">
+                          <img className="mreow-modal-image" alt={image.alt ?? caption} src={publicAssetUrl(lightbox.mediaFolder, image.src)} />
+                        </div>
+                        <figcaption className="mreow-modal-caption">{caption}</figcaption>
+                      </button>
+                    )}
+                  </figure>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {focusedImage && (
+        <div className="mreow-focus" onClick={() => setFocusedImage(null)} role="dialog">
+          <div className="mreow-focus-panel" onClick={(event) => event.stopPropagation()}>
+            <div className="mreow-focus-head">
+              <span className="mreow-focus-title">{title}</span>
+              <button className="mreow-focus-close" onClick={() => setFocusedImage(null)} type="button">×</button>
+            </div>
+            <div className="mreow-focus-stage">
+              <div className="mreow-focus-frame">
+                <img className="mreow-focus-image" alt={focusedImage.item.alt ?? displayTitle(focusedImage.item)} src={publicAssetUrl(focusedImage.mediaFolder, focusedImage.item.src)} />
+              </div>
+              <figcaption className="mreow-focus-caption">{displayTitle(focusedImage.item)}</figcaption>
             </div>
           </div>
         </div>

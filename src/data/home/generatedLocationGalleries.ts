@@ -1,6 +1,14 @@
 import type { GalleryItem } from '../../types'
 
 export const generatedLocationGalleries: Record<string, GalleryItem[]> = {
+  "favourites": [
+    { title: "favourites-haikyuu.jpg", src: "haikyuu.jpg", alt: "favourites trip image", aspectRatio: "4 / 3", folder: "favourites", capturedAt: "2026-09-11T06:06:33.199Z" },
+    { title: "favourites-horimiya.jpg", src: "horimiya.jpg", alt: "favourites trip image", aspectRatio: "4 / 3", folder: "favourites", capturedAt: "2026-09-11T06:09:47.467Z" },
+    { title: "favourites-Ki ni Natteru Hito ga Otoko Janakatta.jpg", src: "Ki ni Natteru Hito ga Otoko Janakatta.jpg", alt: "favourites trip image", aspectRatio: "4 / 3", folder: "favourites", capturedAt: "2026-09-11T06:07:48.981Z" }
+  ],
+  "anime": [
+    { title: "anime-kenma.jpg", src: "kenma.jpg", alt: "anime trip image", aspectRatio: "4 / 3", folder: "anime", capturedAt: "2026-09-09T22:32:13.214Z" }
+  ],
   "japan1": [
     { title: "japan1-IMG_1562.jpg", src: "IMG_1562.jpg", alt: "japan1 trip image", aspectRatio: "4 / 3", folder: "japan1", capturedAt: "2026-09-09T22:32:13.214Z" },
     { title: "japan1-IMG_1563.jpg", src: "IMG_1563.jpg", alt: "japan1 trip image", aspectRatio: "4 / 3", folder: "japan1", capturedAt: "2026-09-09T22:32:13.216Z" },
@@ -84,6 +92,10 @@ export const generatedLocationGalleries: Record<string, GalleryItem[]> = {
     { title: "japan2-IMG_2509.jpg", src: "IMG_2509.jpg", alt: "japan2 trip image", aspectRatio: "4 / 3", folder: "japan2", capturedAt: "2026-09-09T22:32:13.544Z" },
     { title: "japan2-IMG_2510.jpg", src: "IMG_2510.jpg", alt: "japan2 trip image", aspectRatio: "4 / 3", folder: "japan2", capturedAt: "2026-09-09T22:32:13.545Z" }
   ],
+  "sports": [
+    { title: "sports-badminton.jpg", src: "badminton.jpg", alt: "sports trip image", aspectRatio: "4 / 3", folder: "sports", capturedAt: "2026-09-10T22:41:57.410Z" },
+    { title: "sports-bowling.jpg", src: "bowling.jpg", alt: "sports trip image", aspectRatio: "4 / 3", folder: "sports", capturedAt: "2026-09-09T22:32:13.549Z" }
+  ],
   "sydney": [
     { title: "sydney-IMG_2522.JPG", src: "IMG_2522.JPG", alt: "sydney trip image", aspectRatio: "4 / 3", folder: "sydney", capturedAt: "2026-09-09T22:32:13.560Z" },
     { title: "sydney-IMG_2523.jpg", src: "IMG_2523.jpg", alt: "sydney trip image", aspectRatio: "4 / 3", folder: "sydney", capturedAt: "2026-09-09T22:32:13.562Z" },
@@ -94,9 +106,5 @@ export const generatedLocationGalleries: Record<string, GalleryItem[]> = {
     { title: "sydney-IMG_2537.jpg", src: "IMG_2537.jpg", alt: "sydney trip image", aspectRatio: "4 / 3", folder: "sydney", capturedAt: "2026-09-09T22:32:13.579Z" },
     { title: "sydney-IMG_2546.jpg", src: "IMG_2546.jpg", alt: "sydney trip image", aspectRatio: "4 / 3", folder: "sydney", capturedAt: "2026-09-09T22:32:13.580Z" },
     { title: "sydney-IMG_2550.jpg", src: "IMG_2550.jpg", alt: "sydney trip image", aspectRatio: "4 / 3", folder: "sydney", capturedAt: "2026-09-09T22:32:13.582Z" }
-  ],
-  "sports": [
-    { title: "sports-badminton.jpg", src: "badminton.jpg", alt: "sports trip image", aspectRatio: "4 / 3", folder: "sports", capturedAt: "2026-09-10T22:41:57.410Z" },
-    { title: "sports-bowling.jpg", src: "bowling.jpg", alt: "sports trip image", aspectRatio: "4 / 3", folder: "sports", capturedAt: "2026-09-09T22:32:13.549Z" }
   ]
 }

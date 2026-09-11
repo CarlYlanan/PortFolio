@@ -13,12 +13,15 @@ export const homeContent: StandardTabContent = {
       body: 'This is a small personal collection of the systems, ideas, and study that make up my current digital life. I keep it intentionally simple and quiet, because most of the best work feels better when it leaves room for attention.',
     },
     {
-      id: 'anime',
-      title: '02 // favourite anime',
-      body: 'A few character and media references that keep showing up in the way I think about design, atmosphere, and stories.',
-      mediaFolder: '/media/home/favourites/anime',
+      id: 'media',
+      title: '02 // favourite media',
+      body: 'A few character, story, and media references that keep showing up in the way I think about design, atmosphere, and stories.',
+      mediaFolder: '/media/home/favourites',
       gallery: [
-        { title: 'Kenma', src: 'kenma.jpg', alt: 'Favourite anime character', aspectRatio: '4 / 5', folder: 'anime', capturedAt: '2026-09-10T00:00:00Z' },
+        { src: 'anime/kenma.jpg', alt: 'Favourite anime character', aspectRatio: '4 / 5', folder: 'favourites', capturedAt: '2026-09-10T00:00:00Z' },
+        { src: 'haikyuu.jpg', alt: 'Haikyuu', aspectRatio: '4 / 3', folder: 'favourites', capturedAt: '2026-09-11T00:00:00Z' },
+        { src: 'Ki ni Natteru Hito ga Otoko Janakatta.jpg', alt: 'Ki ni Natteru Hito ga Otoko Janakatta', aspectRatio: '4 / 3', folder: 'favourites', capturedAt: '2026-09-11T00:00:00Z' },
+        { src: 'horimiya.jpg', alt: 'Horimiya', aspectRatio: '4 / 3', folder: 'favourites', capturedAt: '2026-09-11T00:00:00Z' },
       ],
     },
     {
@@ -27,19 +30,6 @@ export const homeContent: StandardTabContent = {
       body: 'The kinds of movement and balance that keep me active and grounded outside a screen.',
       mediaFolder: '/media/home/locations/sports',
       gallery: generatedLocationGalleries.sports ?? [],
-    },
-    {
-      id: 'games',
-      title: '04 // favourite games',
-      body: 'The games I keep coming back to for rhythm, FPS pressure, and long-running stories.',
-      mediaFolder: '/media/home/favourites/games',
-      gallery: [
-        { title: 'BO2', src: 'bo2.jpg', alt: 'BO2', aspectRatio: '4 / 3', folder: 'games', capturedAt: '2026-09-12T00:00:00Z' },
-        { title: 'Overwatch', src: 'overwatch.jpg', alt: 'Overwatch', aspectRatio: '4 / 3', folder: 'games', capturedAt: '2026-09-13T00:00:00Z' },
-        { title: 'osu!', src: 'osu.jpg', alt: 'osu!', aspectRatio: '4 / 3', folder: 'games', capturedAt: '2026-09-14T00:00:00Z' },
-        { title: 'SDVX', src: 'sdvx.jpg', alt: 'SDVX', aspectRatio: '4 / 3', folder: 'games', capturedAt: '2026-09-15T00:00:00Z' },
-        { title: 'maimai', src: 'maimai.jpg', alt: 'maimai', aspectRatio: '4 / 3', folder: 'games', capturedAt: '2026-09-16T00:00:00Z' },
-      ],
     },
     {
       id: 'japan1',
@@ -75,7 +65,7 @@ export const homeContent: StandardTabContent = {
   ],
   markers: [
     { id: 'intro', label: '01 // intro' },
-    { id: 'anime', label: '02 // favourite anime' },
+    { id: 'media', label: '02 // favourite media' },
     { id: 'sports', label: '03 // favourite sports' },
     { id: 'games', label: '04 // favourite games' },
     { id: 'japan1', label: '05 // japan one' },

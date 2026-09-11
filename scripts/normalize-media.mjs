@@ -6,9 +6,23 @@ import { fileURLToPath } from 'node:url'
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const projectRoot = path.resolve(scriptDir, '..')
-const mediaRoot = path.join(projectRoot, 'public', 'media', 'home', 'locations')
-const galleryOutput = path.join(projectRoot, 'src', 'data', 'home', 'generatedLocationGalleries.ts')
-const sourceFolders = ['japan1', 'japan2', 'sydney', 'sports']
+const mediaRoot = path.join(projectRoot, 'public', 'media')
+
+const groupFolders = {
+  home: 'home',
+  about: 'about',
+  articles: 'articles',
+  setup: 'setup',
+  social: 'social',
+}
+
+const galleryOutputByGroup = {
+  home: path.join(projectRoot, 'src', 'data', 'home', 'generatedLocationGalleries.ts'),
+  about: path.join(projectRoot, 'src', 'data', 'about', 'generatedLocationGalleries.ts'),
+  articles: path.join(projectRoot, 'src', 'data', 'articles', 'generatedLocationGalleries.ts'),
+  setup: path.join(projectRoot, 'src', 'data', 'setup', 'generatedLocationGalleries.ts'),
+  social: path.join(projectRoot, 'src', 'data', 'social', 'generatedLocationGalleries.ts'),
+}
 
 const webImageExt = new Set(['.jpg', '.jpeg', '.png', '.jpe'])
 const skipVideoExt = new Set(['.mov', '.mp4', '.webm'])
@@ -52,9 +66,32 @@ function isRawFile(fileName) {
   return lower.endsWith('.heic.jpg') || lower.endsWith('.heif.jpg') || lower.endsWith('.heic') || lower.endsWith('.heif')
 }
 
-async function normalizeFolder(folder) {
-  const sourceDir = path.join(mediaRoot, folder)
+async function collectFolders(sourceDir) {
+  const folders = []
 
+  async function walk(currentDir) {
+    try {
+      const entries = await listFiles(currentDir)
+      const directories = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name)
+      const imageFiles = entries.filter((entry) => entry.isFile() && webImageExt.has(path.extname(entry.name).toLowerCase()))
+
+      if (imageFiles.length > 0) {
+        folders.push(currentDir)
+      }
+
+      for (const directory of directories) {
+        await walk(path.join(currentDir, directory))
+      }
+    } catch {
+      // ignore folders that disappear during the traversal
+    }
+  }
+
+  await walk(sourceDir)
+  return folders
+}
+
+async function normalizeFolder(sourceDir, folder) {
   try {
     await fs.access(sourceDir)
   } catch {
@@ -73,7 +110,6 @@ async function normalizeFolder(folder) {
   for (const file of sorted) {
     const input = path.join(sourceDir, file.name)
     const ext = path.extname(file.name).toLowerCase()
-    const lowerName = file.name.toLowerCase()
 
     if (skipVideoExt.has(ext)) {
       skipped += 1
@@ -130,8 +166,34 @@ async function normalizeFolder(folder) {
   return gallery
 }
 
-async function writeGalleries(galleries) {
-  const paths = sourceFolders.map((folder) => {
+async function scanGroup(group) {
+  const groupRoot = path.join(mediaRoot, group)
+
+  try {
+    await fs.access(groupRoot)
+  } catch {
+    return {}
+  }
+
+  const observedFolders = await collectFolders(groupRoot)
+  const galleries = {}
+
+  for (const folderPath of observedFolders) {
+    const folder = path.basename(folderPath)
+    const items = await normalizeFolder(folderPath, folder)
+    if (items.length === 0) {
+      continue
+    }
+
+    galleries[folder] = items
+  }
+
+  return galleries
+}
+
+async function writeGalleries(group, galleries) {
+  const groupFoldersList = Object.keys(galleries)
+  const paths = groupFoldersList.map((folder) => {
     const items = galleries[folder] ?? []
     const itemRows = items.map((item) => `    { title: ${JSON.stringify(item.title)}, src: ${JSON.stringify(item.src)}, alt: ${JSON.stringify(item.alt)}, aspectRatio: ${JSON.stringify(item.aspectRatio)}, folder: ${JSON.stringify(item.folder)}, capturedAt: ${JSON.stringify(item.capturedAt)} }`)
     return `  ${JSON.stringify(folder)}: [\n${itemRows.join(',\n')}\n  ]`
@@ -139,8 +201,8 @@ async function writeGalleries(galleries) {
 
   const output = `import type { GalleryItem } from '../../types'\n\nexport const generatedLocationGalleries: Record<string, GalleryItem[]> = {\n${paths.join(',\n')}\n}\n`
 
-  await fs.mkdir(path.dirname(galleryOutput), { recursive: true })
-  await fs.writeFile(galleryOutput, output)
+  await fs.mkdir(path.dirname(galleryOutputByGroup[group]), { recursive: true })
+  await fs.writeFile(galleryOutputByGroup[group], output)
 }
 
 async function main() {
@@ -149,12 +211,10 @@ async function main() {
     process.exit(1)
   }
 
-  const galleries = {}
-  for (const folder of sourceFolders) {
-    galleries[folder] = await normalizeFolder(folder)
+  for (const group of Object.keys(groupFolders)) {
+    const galleries = await scanGroup(group)
+    await writeGalleries(group, galleries)
   }
-
-  await writeGalleries(galleries)
 }
 
 async function ensureFfmpeg() {
