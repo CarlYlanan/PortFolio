@@ -5,10 +5,10 @@ export interface SectionMarker { id: string; label: string }
 export interface ReferenceLink { title: string; url: string }
 export interface BulletItem { item: string; usage: string; url?: string }
 export type BulletEntry = string | BulletItem
-export interface GalleryItem { title: string; src: string; alt?: string; aspectRatio?: string; folder?: string; capturedAt?: string }
+export interface GalleryItem { title: string; src: string; alt?: string; aspectRatio?: string; folder?: string; capturedAt?: string; link?: string }
 export interface ContentSection { id: string; title: string; body: string; bullets?: BulletEntry[]; references?: ReferenceLink[]; rootLink?: ReferenceLink; gallery?: GalleryItem[]; mediaFolder?: string }
 export interface StandardTabContent {
-  id: Exclude<TabId, 'social'>
+  id: Exclude<TabId, 'social' | 'larper'>
   eyebrow: string
   title: string
   summary: string
@@ -16,12 +16,33 @@ export interface StandardTabContent {
   markers: SectionMarker[]
 }
 export interface SocialEntry { id: string; name: string; url: string; reason: string }
+export interface InstagramContent {
+  id: string
+  handle: string
+  profileUrl: string
+  posts: GalleryItem[]
+}
 export interface SocialTabContent {
   id: 'social'
   eyebrow: string
   title: string
   summary: string
+  instagram?: InstagramContent
   socials: SocialEntry[]
   markers: SectionMarker[]
 }
-export type TabContent = StandardTabContent | SocialTabContent
+export interface Article {
+  id: string
+  title: string
+  summary: string
+  updated?: string
+  sections: ContentSection[]
+}
+export interface ArticlesTabContent {
+  id: 'larper'
+  eyebrow: string
+  title: string
+  summary: string
+  articles: Article[]
+}
+export type TabContent = StandardTabContent | SocialTabContent | ArticlesTabContent

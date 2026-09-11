@@ -14,7 +14,7 @@ export const aboutContent: StandardTabContent = {
     {
       id: 'what-ive-done',
       title: 'What I’ve Done',
-      body: 'For a five-person internship project with the Auckland Health Board, I helped build an automated triage diagnosis system that took in documents such as PDFs, extracted the relevant text, separated patient information from patient notes, and passed that information into a rules-based workflow before producing a final document for doctors to review. The aim was to reduce the amount of manual triage work and make the intake process faster, more organized, and more useful for clinical staff.',
+      body: 'For a five-person internship project with the Auckland District Health Board, I helped build an automated triage diagnosis system that took in documents such as PDFs, extracted the relevant text, separated patient information from patient notes, and passed that information into a rules-based workflow before producing a final document for doctors to review. The aim was to reduce the amount of manual triage work and make the intake process faster, more organized, and more useful for clinical staff.',
       bullets: [
         'Built a document intake and triage workflow for clinical document processing.',
         'Separated patient notes from patient metadata before creating a diagnosis structure.',

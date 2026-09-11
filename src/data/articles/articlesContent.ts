@@ -1,8 +1,12 @@
-import type { StandardTabContent } from '../../types'
+import type { ArticlesTabContent } from '../../types'
 
-export const larperContent: StandardTabContent = {
-  id: 'larper', eyebrow: 'Larper / 02', title: 'Linux Guide', summary: 'Notes on distributions, desktop environments, gaming, the terminal, and building a Linux desktop that feels like your own.',
-  sections: [
+export const articlesContent: ArticlesTabContent = {
+  id: 'larper', eyebrow: 'Articles / 02', title: 'Notes from the desk.', summary: 'Longer write-ups on the systems I run — the Linux desktop and the home server, and why I run them the way I do.',
+  articles: [
+    {
+      id: 'linux-desktop', title: 'Linux Desktop', updated: '2026-09-11',
+      summary: 'Distributions, desktop environments, gaming, the terminal, and building a desktop that feels like your own.',
+      sections: [
     {
       id: 'distributions', title: 'Distributions',
       body: 'Distributions define the shape of the Linux experience before the user even interacts with a desktop. They decide the package format, the update rhythm, the default software model, and the level of maintenance that the machine asks of you. Server distributions such as Ubuntu Server and Red Hat are designed around reliability, uptime, and sustained administration rather than visual polish. Daily-driver releases such as Ubuntu, Mint, Zorin, and Fedora aim to make the first transition from another operating system feel less intimidating by offering familiar layouts, packaged software stores, and fixed release cycles. Rolling distributions such as CachyOS and Nobara move more quickly and let the user decide when to refresh software, which creates a different relationship with the operating system: less forced change, more discretion, and a stronger sense of ownership. The best choice depends on whether the system is meant to feel stable, familiar, or highly adaptable. For many people, the real question is whether they want an experience that is predictable and safe, or one that is flexible enough to grow with their workflow. In that sense, the distribution is not just a base layer. It is a design decision about what kind of everyday relationship a computer should have with its user.',
@@ -88,5 +92,44 @@ export const larperContent: StandardTabContent = {
         { title: 'Fastfetch', url: 'https://github.com/fastfetch-cli/fastfetch' },
       ],
     },
-  ], markers: [{ id: 'distributions', label: '01 // distributions' }, { id: 'desktop-environments', label: '02 // desktop environments' }, { id: 'gaming', label: '03 // gaming' }, { id: 'terminal', label: '04 // terminal' }, { id: 'ricing', label: '05 // ricing' }],
+      ],
+    },
+    {
+      id: 'server', title: 'Server', updated: '2026-09-11',
+      summary: 'Why I self-host: privacy without permission slips, cheaper than subscriptions, a calmer network for the whole household, and services that run themselves.',
+      sections: [
+        {
+          id: 'privacy', title: 'Privacy',
+          body: 'The main reason I run my own services is the current trend of mainstream companies: they compromise on privacy in order to maximise profits and collect user data. Self-hosting lets me manage my own privacy directly, on my own terms, instead of trusting a dashboard or filing deletion requests and hoping they are honoured. The data that matters lives on hardware I control, not on servers that treat it as a product to be sold.',
+        },
+        {
+          id: 'cost', title: 'Cost',
+          body: 'Self-hosted alternatives quietly replace subscriptions I would otherwise pay for. Music is the obvious example — the stack streams my own library instead of a premium plan, and the money I do spend goes into hardware I own rather than a recurring fee. The specific services are listed in the Setup tab; here it is enough to say the stack pays for itself.',
+        },
+        {
+          id: 'a-calmer-network', title: 'A calmer network',
+          body: 'Ad blocking at the DNS level smooths browsing for the entire household, not just one browser on one machine. Every device on the network gets the benefit without installing anything. The one gap that still gets through is YouTube ads on mobile and TV — YouTube\'s ad policy keeps those out of reach — so I treat that as a known limit rather than a fight worth having.',
+        },
+        {
+          id: 'self-reliance', title: 'Self-reliance & power',
+          body: 'The server makes me self-reliant on automation, both hardware and software, depending on the services I run. It monitors the stack 24/7 at a fraction of the power a desktop would draw — there is no need to power on a laptop or desktop just to keep a handful of services alive. Small, always-on, and efficient: it is the difference between running services and babysitting them.',
+        },
+        {
+          id: 'the-stack', title: 'The stack, briefly',
+          body: 'Everything above runs on a Raspberry Pi 8GB with Docker Compose. A Cloudflare tunnel replaces open ports, Navidrome serves the music, AdGuard Home does the blocking, and an IBM X3300 rack server keeps the cold storage. This page is the why; the Setup tab is the what.',
+          bullets: [
+            'A Cloudflare tunnel exposes the website without open ports.',
+            'Two Navidrome instances serve separate music libraries.',
+            'AdGuard Home filters ads for every device on the network.',
+            'IBM X3300 M4 with 192GB DDR3 for offline cold storage.',
+          ],
+          references: [
+            { title: 'Navidrome', url: 'https://www.navidrome.org' },
+            { title: 'AdGuard Home', url: 'https://adguard.com/en/adguard-home/overview.html' },
+            { title: 'Docker Compose', url: 'https://docs.docker.com/compose/' },
+          ],
+        },
+      ],
+    },
+  ],
 }

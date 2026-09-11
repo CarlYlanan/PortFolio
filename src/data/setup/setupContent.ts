@@ -5,7 +5,7 @@ export const setupContent: StandardTabContent = {
   sections: [
     {
       id: 'linux', title: 'Linux',
-      body: 'My desktop is built around CachyOS and a Niri-first workflow. The stack stays intentionally light: PipeWire handles the audio layer, rofi is the launcher, Waybar and a few scripts carry the interface, and wlogout gives the power screen a personal finish.',
+      body: 'My desktop is built around CachyOS and a Niri. The stack tries to remain light: rofi is the launcher, Waybar and a few scripts carry the interface, and wlogout gives the power screen a personal finish. I like using this setup as it allows me to control everything to the detail and be free from unnecessary bloat.',
       bullets: [
         { item: 'CachyOS', usage: 'Base system' },
         { item: 'PipeWire', usage: 'Audio layer', url: 'https://github.com/CarlYlanan/Desktop-Config/tree/main/pipewire/pipewire.conf.d' },

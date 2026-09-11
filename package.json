@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "convert:media": "node scripts/normalize-media.mjs"
+    "convert:media": "node scripts/normalize-media.mjs",
+    "fetch:instagram": "node scripts/fetch-instagram.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
