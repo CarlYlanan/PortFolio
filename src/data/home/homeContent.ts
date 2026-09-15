@@ -4,8 +4,8 @@ import { generatedLocationGalleries } from './generatedLocationGalleries'
 export const homeContent: StandardTabContent = {
   id: 'home',
   eyebrow: 'Portfolio / 2026',
-  title: 'A quiet corner of the internet.',
-  summary: 'Hi, I’m Carly. This is a small collection of the things I’m learning, making, and paying attention to.',
+  title: 'Portfolio thingy',
+  summary: 'yapyap.',
   sections: [
     {
       id: 'intro',

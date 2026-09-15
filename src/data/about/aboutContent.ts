@@ -7,11 +7,6 @@ export const aboutContent: StandardTabContent = {
   summary: 'A short look at the work, interests, and direction behind the projects.',
   sections: [
     {
-      id: 'statement',
-      title: 'Personal Statement',
-      body: 'I am a technically minded person with a growing interest in systems, automation, and privacy-respecting infrastructure. I have been moving away from large cloud platforms and toward self-hosted tools that let me run media, files, and local AI services on my own terms. I like working with hardware, setting up containers, and solving problems hands-on, especially when the result is something practical, fast, and reliable. I care about clear communication, technical honesty, and building things that are useful before they are impressive.',
-    },
-    {
       id: 'what-ive-done',
       title: 'What I’ve Done',
       body: 'For a five-person internship project with the Auckland District Health Board, I helped build an automated triage diagnosis system that took in documents such as PDFs, extracted the relevant text, separated patient information from patient notes, and passed that information into a rules-based workflow before producing a final document for doctors to review. The aim was to reduce the amount of manual triage work and make the intake process faster, more organized, and more useful for clinical staff.',
