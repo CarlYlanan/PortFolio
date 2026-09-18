@@ -2,7 +2,6 @@ import type { StandardTabContent } from '../../types'
 import { generatedLocationGalleries } from './generatedLocationGalleries'
 
 const favourites = generatedLocationGalleries.favourites ?? []
-const games = generatedLocationGalleries.games ?? []
 const sports = generatedLocationGalleries.sports ?? []
 const japan1 = generatedLocationGalleries.japan1 ?? []
 const japan2 = generatedLocationGalleries.japan2 ?? []
