@@ -31,13 +31,6 @@ export const galleryContent: StandardTabContent = {
           sortBy: 'custom',
         },
         {
-          id: 'games',
-          title: 'Games',
-          mediaFolder: '/media/gallery/favourites/games',
-          items: games,
-          sortBy: 'name',
-        },
-        {
           id: 'sports',
           title: 'Sports',
           mediaFolder: '/media/gallery/locations/sports',
