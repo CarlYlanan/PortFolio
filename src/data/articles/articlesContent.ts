@@ -131,5 +131,41 @@ export const articlesContent: ArticlesTabContent = {
         },
       ],
     },
+    {
+      id: 'triage-pipeline', title: 'What I’ve Done', updated: '2026-09-19',
+      summary: 'An internship project with the Auckland District Health Board: turning clinical PDF intake into a review-ready triage document.',
+      sections: [
+        {
+          id: 'overview', title: 'Overview',
+          body: 'For a five-person internship project with the Auckland District Health Board, I helped build an automated triage diagnosis system that took in documents such as PDFs, extracted the relevant text, separated patient information from patient notes, and passed that information into a rules-based workflow before producing a final document for doctors to review. The aim was to reduce the amount of manual triage work and make the intake process faster, more organized, and more useful for clinical staff.',
+          bullets: [
+            'Built a document intake and triage workflow for clinical document processing.',
+            'Separated patient notes from patient metadata before creating a diagnosis structure.',
+            'Worked with text extraction and rules-based preprocessing for an LLM-assisted decision pipeline.',
+            'Structured patient information into a final document suitable for doctor review.',
+          ],
+        },
+        {
+          id: 'the-problem', title: 'The problem',
+          body: 'Before the project, triage relied on staff reading intake documents by hand and re-keying the information that mattered. This section will cover how that process worked, who was involved, and where the time and risk were concentrated.',
+        },
+        {
+          id: 'the-pipeline', title: 'The pipeline',
+          body: 'The system moved through a fixed sequence: intake, text extraction, separating patient information from patient notes, a rules-based workflow, and a final document for review. This section will walk through each stage in detail.',
+        },
+        {
+          id: 'my-role', title: 'My role',
+          body: 'Within a five-person team, my work centred on the document processing side of the pipeline. This section will set out what I owned, the decisions I made, and how the work was split across the team.',
+        },
+        {
+          id: 'outcome', title: 'Outcome',
+          body: 'This section will record what shipped, how clinical staff used it, and what changed about the intake process as a result.',
+        },
+        {
+          id: 'whats-next', title: 'What’s next',
+          body: 'This section will collect the improvements, open questions, and follow-up ideas that came out of the internship.',
+        },
+      ],
+    },
   ],
 }

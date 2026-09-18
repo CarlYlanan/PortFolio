@@ -7,6 +7,12 @@ export interface MreowCarouselProps {
   visibleBoxes?: number
   title?: string
   sortOrder?: 'asc' | 'desc'
+  sortBy?: 'date' | 'name' | 'custom'
+}
+
+function fileName(item: GalleryItem) {
+  const source = item.src ?? ''
+  return source.split('/').pop() ?? source
 }
 
 function publicAssetUrl(mediaFolder: string, src: string) {
@@ -25,16 +31,24 @@ function displayTitle(item: GalleryItem) {
   return base.replace(/\.[^/.]+$/, '') || 'Untitled media'
 }
 
-export function MreowCarousel({ items, mediaFolder = '/media', title = 'Gallery', sortOrder = 'asc' }: MreowCarouselProps) {
+export function MreowCarousel({ items, mediaFolder = '/media', title = 'Gallery', sortOrder = 'asc', sortBy = 'date' }: MreowCarouselProps) {
   const [lightbox, setLightbox] = useState<{ mediaFolder: string; items: GalleryItem[] } | null>(null)
   const [focusedImage, setFocusedImage] = useState<{ mediaFolder: string; item: GalleryItem } | null>(null)
 
   const sortedItems = useMemo(() => {
+    if (sortBy === 'custom') {
+      return items
+    }
+
+    if (sortBy === 'name') {
+      return [...items].sort((a, b) => fileName(a).localeCompare(fileName(b), undefined, { numeric: true, sensitivity: 'base' }))
+    }
+
     const factor = sortOrder === 'desc' ? -1 : 1
     return [...items].sort((a, b) => {
       return factor * (new Date(a.capturedAt ?? '').getTime() - new Date(b.capturedAt ?? '').getTime())
     })
-  }, [items, sortOrder])
+  }, [items, sortOrder, sortBy])
 
   return (
     <div className="mreow-carousel">

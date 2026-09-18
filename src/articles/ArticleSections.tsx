@@ -12,8 +12,21 @@ export function ArticleSections({ sections }: ArticleSectionsProps) {
         <article className="content-section" id={section.id} key={section.id}>
           <p className="section-label">{section.title}</p>
           <p>{section.body}</p>
-          {section.gallery && section.gallery.length > 0 && (
-            <MreowCarousel items={section.gallery} mediaFolder={section.mediaFolder ?? '/media'} visibleBoxes={5} />
+          {section.galleries && section.galleries.length > 0 && (
+            <div className="gallery-groups">
+              {section.galleries.map((group) => (
+                <div className="gallery-group" key={group.id}>
+                  <p className="gallery-heading">{group.title}</p>
+                  <MreowCarousel
+                    items={group.items}
+                    mediaFolder={group.mediaFolder ?? '/media'}
+                    sortBy={group.sortBy}
+                    title={group.title}
+                    visibleBoxes={5}
+                  />
+                </div>
+              ))}
+            </div>
           )}
           {section.bullets && section.bullets.length > 0 && (
             <ul className="section-bullets">

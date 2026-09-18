@@ -1,4 +1,4 @@
-export type TabId = 'home' | 'about' | 'larper' | 'setup' | 'social'
+export type TabId = 'home' | 'gallery' | 'larper' | 'setup' | 'social'
 
 export interface NavigationTab { id: TabId; label: string }
 export interface SectionMarker { id: string; label: string }
@@ -6,7 +6,8 @@ export interface ReferenceLink { title: string; url: string }
 export interface BulletItem { item: string; usage: string; url?: string }
 export type BulletEntry = string | BulletItem
 export interface GalleryItem { title?: string; src: string; alt?: string; aspectRatio?: string; folder?: string; capturedAt?: string; link?: string }
-export interface ContentSection { id: string; title: string; body: string; bullets?: BulletEntry[]; references?: ReferenceLink[]; rootLink?: ReferenceLink; gallery?: GalleryItem[]; mediaFolder?: string }
+export interface GalleryGroup { id: string; title: string; mediaFolder?: string; items: GalleryItem[]; sortBy?: 'date' | 'name' | 'custom' }
+export interface ContentSection { id: string; title: string; body: string; bullets?: BulletEntry[]; references?: ReferenceLink[]; rootLink?: ReferenceLink; galleries?: GalleryGroup[] }
 export interface StandardTabContent {
   id: Exclude<TabId, 'social' | 'larper'>
   eyebrow: string

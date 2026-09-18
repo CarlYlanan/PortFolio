@@ -9,16 +9,14 @@ const projectRoot = path.resolve(scriptDir, '..')
 const mediaRoot = path.join(projectRoot, 'public', 'media')
 
 const groupFolders = {
-  home: 'home',
-  about: 'about',
+  gallery: 'gallery',
   articles: 'articles',
   setup: 'setup',
   social: 'social',
 }
 
 const galleryOutputByGroup = {
-  home: path.join(projectRoot, 'src', 'data', 'home', 'generatedLocationGalleries.ts'),
-  about: path.join(projectRoot, 'src', 'data', 'about', 'generatedLocationGalleries.ts'),
+  gallery: path.join(projectRoot, 'src', 'data', 'gallery', 'generatedLocationGalleries.ts'),
   articles: path.join(projectRoot, 'src', 'data', 'articles', 'generatedLocationGalleries.ts'),
   setup: path.join(projectRoot, 'src', 'data', 'setup', 'generatedLocationGalleries.ts'),
   social: path.join(projectRoot, 'src', 'data', 'social', 'generatedLocationGalleries.ts'),
