@@ -1,7 +1,7 @@
 import type { StandardTabContent } from '../../types'
 
 export const setupContent: StandardTabContent = {
-  id: 'setup', eyebrow: 'Setup / 03', title: 'The daily drivers of my life.', summary: 'This is a list of software and hardware that I use daily that accomodates my lifestyle in any way.',
+  id: 'setup', eyebrow: 'Setup / 03', title: 'Stuff', summary: 'This is a list of software and hardware that I use daily that accomodates my lifestyle in any way.',
   sections: [
     {
       id: 'linux', title: 'Linux',

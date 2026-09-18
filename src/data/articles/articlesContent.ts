@@ -1,7 +1,7 @@
 import type { ArticlesTabContent } from '../../types'
 
 export const articlesContent: ArticlesTabContent = {
-  id: 'larper', eyebrow: 'Articles / 02', title: 'Notes from the desk.', summary: 'Longer write-ups on the systems I run — the Linux desktop and the home server, and why I run them the way I do.',
+  id: 'larper', eyebrow: 'Articles / 02', title: 'Big Words', summary: 'Things I do to some depth',
   articles: [
     {
       id: 'linux-desktop', title: 'Linux Desktop', updated: '2026-09-11',

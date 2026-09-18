@@ -14,7 +14,7 @@ const media = kenma ? [kenma, ...favourites.filter((item) => item.src !== 'kenma
 export const galleryContent: StandardTabContent = {
   id: 'gallery',
   eyebrow: 'Gallery / 01',
-  title: 'Scenes worth keeping.',
+  title: 'Photo Dump',
   summary: 'My all time favourite media, plus the places I have been lucky enough to visit.',
   sections: [
     {
