@@ -22,8 +22,10 @@ const galleryOutputByGroup = {
   social: path.join(projectRoot, 'src', 'data', 'social', 'generatedLocationGalleries.ts'),
 }
 
-const webImageExt = new Set(['.jpg', '.jpeg', '.png', '.jpe'])
+const webImageExt = new Set(['.jpg', '.jpeg', '.jpe', '.png', '.gif', '.webp', '.avif'])
+const convertImageExt = new Set(['.heic', '.heif', '.tif', '.tiff', '.bmp'])
 const skipVideoExt = new Set(['.mov', '.mp4', '.webm'])
+const discoverableExt = new Set([...webImageExt, ...convertImageExt])
 
 async function listFiles(sourceDir) {
   try {
@@ -42,26 +44,85 @@ function ffmpegConvert(input, output) {
   return result.status === 0
 }
 
-function rawFileOutput(fileName) {
+function magickConvert(input, output) {
+  const result = spawnSync('magick', [input, output], {
+    encoding: 'utf8',
+    stdio: 'ignore',
+  })
+
+  return result.status === 0
+}
+
+function heifConvert(input, output) {
+  const result = spawnSync('heif-convert', [input, output], {
+    encoding: 'utf8',
+    stdio: 'ignore',
+  })
+
+  return result.status === 0
+}
+
+// HEIC/HEIF files are HEVC tile grids - ffmpeg would only extract a thumbnail
+// tile, so they require a real HEIF decoder (heif-convert or ImageMagick with
+// libheif). Plain TIFF/BMP convert fine with ffmpeg.
+function convertImage(input, output, ext) {
+  if (ext === '.heic' || ext === '.heif') {
+    if (heifConvert(input, output)) return 'heif-convert'
+    if (magickConvert(input, output)) return 'magick'
+    return null
+  }
+
+  return ffmpegConvert(input, output) ? 'ffmpeg' : null
+}
+
+async function removeSidecarOutputs(sourceDir, outputName) {
+  const base = outputName.replace(/\.[^.]+$/, '')
+  const entries = await listFiles(sourceDir)
+  for (const entry of entries) {
+    if (entry.isFile() && entry.name.startsWith(`${base}-`) && /\.jpe?g$/i.test(entry.name)) {
+      await fs.rm(path.join(sourceDir, entry.name), { force: true })
+    }
+  }
+}
+
+function convertedFileName(fileName) {
   const lower = fileName.toLowerCase()
   if (lower.endsWith('.heic.jpg')) {
-    return fileName.slice(0, fileName.length - '.HEIC.jpg'.length) + '.jpg'
+    return fileName.slice(0, fileName.length - '.heic.jpg'.length) + '.jpg'
   }
   if (lower.endsWith('.heif.jpg')) {
-    return fileName.slice(0, fileName.length - '.HEIF.jpg'.length) + '.jpg'
+    return fileName.slice(0, fileName.length - '.heif.jpg'.length) + '.jpg'
   }
-  if (lower.endsWith('.heic')) {
-    return fileName.slice(0, fileName.length - '.HEIC'.length) + '.jpg'
+
+  const ext = path.extname(fileName)
+  if (convertImageExt.has(ext.toLowerCase())) {
+    return `${fileName.slice(0, fileName.length - ext.length)}.jpg`
   }
-  if (lower.endsWith('.heif')) {
-    return fileName.slice(0, fileName.length - '.HEIF'.length) + '.jpg'
-  }
+
   return null
 }
 
-function isRawFile(fileName) {
+function isConvertible(fileName) {
   const lower = fileName.toLowerCase()
-  return lower.endsWith('.heic.jpg') || lower.endsWith('.heif.jpg') || lower.endsWith('.heic') || lower.endsWith('.heif')
+  return lower.endsWith('.heic.jpg') || lower.endsWith('.heif.jpg') || convertImageExt.has(path.extname(fileName).toLowerCase())
+}
+
+function probeAspectRatio(filePath) {
+  const result = spawnSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=s=x:p=0', filePath], {
+    encoding: 'utf8',
+  })
+
+  if (result.status !== 0) {
+    return '4 / 3'
+  }
+
+  const first = (result.stdout.trim().split('\n')[0] ?? '').trim()
+  const [width, height] = first.split('x').map((value) => Number.parseInt(value, 10))
+  if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
+    return '4 / 3'
+  }
+
+  return `${width} / ${height}`
 }
 
 async function collectFolders(sourceDir) {
@@ -71,7 +132,7 @@ async function collectFolders(sourceDir) {
     try {
       const entries = await listFiles(currentDir)
       const directories = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name)
-      const imageFiles = entries.filter((entry) => entry.isFile() && webImageExt.has(path.extname(entry.name).toLowerCase()))
+      const imageFiles = entries.filter((entry) => entry.isFile() && discoverableExt.has(path.extname(entry.name).toLowerCase()))
 
       if (imageFiles.length > 0) {
         folders.push(currentDir)
@@ -89,11 +150,11 @@ async function collectFolders(sourceDir) {
   return folders
 }
 
-async function normalizeFolder(sourceDir, folder) {
+async function normalizeFolder(sourceDir, label, folder) {
   try {
     await fs.access(sourceDir)
   } catch {
-    console.log(`[skip] ${folder}: source folder does not exist`)
+    console.log(`[skip] ${label}: source folder does not exist`)
     return []
   }
 
@@ -103,6 +164,7 @@ async function normalizeFolder(sourceDir, folder) {
   let converted = 0
   let copied = 0
   let skipped = 0
+  let ignored = 0
   const gallery = []
 
   for (const file of sorted) {
@@ -111,12 +173,12 @@ async function normalizeFolder(sourceDir, folder) {
 
     if (skipVideoExt.has(ext)) {
       skipped += 1
-      await fs.rm(input, { force: true })
+      console.log(`[skip] video left in place: ${path.relative(projectRoot, input)}`)
       continue
     }
 
-    if (isRawFile(file.name)) {
-      const outputName = rawFileOutput(file.name)
+    if (isConvertible(file.name)) {
+      const outputName = convertedFileName(file.name)
       if (!outputName) {
         continue
       }
@@ -124,21 +186,24 @@ async function normalizeFolder(sourceDir, folder) {
       const output = path.join(sourceDir, outputName)
       await fs.rm(output, { force: true })
 
-      const ok = ffmpegConvert(input, output)
-      if (!ok) {
-        console.log(`[warn] failed conversion ${input}`)
+      const tool = convertImage(input, output, ext)
+      if (!tool) {
+        console.log(`[warn] no decoder could convert ${input} - original left in place`)
+        console.log('[warn] hint: install a HEIC decoder (sudo dnf install libheif-tools) or drop JPG exports instead')
         continue
       }
+      console.log(`[convert] ${tool}: ${file.name} -> ${outputName}`)
 
       converted += 1
       await fs.rm(input, { force: true })
+      await removeSidecarOutputs(sourceDir, outputName)
 
       const mtime = (await fs.stat(output)).mtimeMs
       gallery.push({
-        title: `${folder}-${outputName}`,
+        title: `${label}-${outputName}`,
         src: outputName,
-        alt: `${folder} trip image`,
-        aspectRatio: '4 / 3',
+        alt: `${label} trip image`,
+        aspectRatio: probeAspectRatio(output),
         folder,
         capturedAt: new Date(mtime).toISOString(),
       })
@@ -150,18 +215,39 @@ async function normalizeFolder(sourceDir, folder) {
       copied += 1
       const mtime = (await fs.stat(input)).mtimeMs
       gallery.push({
-        title: `${folder}-${file.name}`,
+        title: `${label}-${file.name}`,
         src: file.name,
-        alt: `${folder} trip image`,
-        aspectRatio: '4 / 3',
+        alt: `${label} trip image`,
+        aspectRatio: probeAspectRatio(input),
         folder,
         capturedAt: new Date(mtime).toISOString(),
       })
+    } else {
+      ignored += 1
     }
   }
 
-  console.log(`[ok] ${folder}: converted=${converted}, copied=${copied}, skipped=${skipped}, total=${converted + copied}`)
+  console.log(`[ok] ${label}: converted=${converted}, copied=${copied}, skipped=${skipped}, ignored=${ignored}, total=${converted + copied}`)
   return gallery
+}
+
+function folderLabel(name) {
+  const stripped = name.replace(/^\d+[-_. ]+/, '')
+  const words = stripped.replace(/[{}()]+/g, ' ').replace(/[-_.]+/g, ' ').replace(/\s+/g, ' ').trim()
+  if (words === '') {
+    return name
+  }
+
+  return words.replace(/\b\w/g, (char) => char.toUpperCase())
+}
+
+function folderOrder(name) {
+  const match = name.match(/^(\d+)[-_. ]/)
+  return match ? Number.parseInt(match[1], 10) : null
+}
+
+function relativeFolderPath(groupRoot, folderPath) {
+  return path.relative(groupRoot, folderPath).split(path.sep).join('/')
 }
 
 async function scanGroup(group) {
@@ -170,26 +256,40 @@ async function scanGroup(group) {
   try {
     await fs.access(groupRoot)
   } catch {
-    return {}
+    return { galleries: {}, folders: [] }
   }
 
   const observedFolders = await collectFolders(groupRoot)
   const galleries = {}
+  const folders = []
 
   for (const folderPath of observedFolders) {
-    const folder = path.basename(folderPath)
-    const items = await normalizeFolder(folderPath, folder)
+    const relative = relativeFolderPath(groupRoot, folderPath)
+    const name = relative === '' ? group : path.basename(folderPath)
+    const key = relative === '' ? group : relative
+    const items = await normalizeFolder(folderPath, folderLabel(name), key)
+
     if (items.length === 0) {
       continue
     }
 
-    galleries[folder] = items
+    galleries[key] = items
+    folders.push({
+      key,
+      path: relative,
+      name,
+      title: name,
+      section: relative === '' ? group : relative.split('/')[0],
+      order: folderOrder(name),
+      count: items.length,
+    })
   }
 
-  return galleries
+  return { galleries, folders }
 }
 
-async function writeGalleries(group, galleries) {
+async function writeGalleries(group, data) {
+  const { galleries, folders } = data
   const groupFoldersList = Object.keys(galleries)
   const paths = groupFoldersList.map((folder) => {
     const items = galleries[folder] ?? []
@@ -197,7 +297,9 @@ async function writeGalleries(group, galleries) {
     return `  ${JSON.stringify(folder)}: [\n${itemRows.join(',\n')}\n  ]`
   })
 
-  const output = `import type { GalleryItem } from '../../types'\n\nexport const generatedLocationGalleries: Record<string, GalleryItem[]> = {\n${paths.join(',\n')}\n}\n`
+  const folderRows = folders.map((folder) => `    { key: ${JSON.stringify(folder.key)}, path: ${JSON.stringify(folder.path)}, name: ${JSON.stringify(folder.name)}, title: ${JSON.stringify(folder.title)}, section: ${JSON.stringify(folder.section)}, order: ${folder.order === null ? 'null' : folder.order}, count: ${folder.count} }`)
+
+  const output = `import type { GalleryItem, GeneratedGalleryFolder } from '../../types'\n\nexport const generatedLocationGalleries: Record<string, GalleryItem[]> = {\n${paths.join(',\n')}\n}\n\nexport const generatedGalleryFolders: GeneratedGalleryFolder[] = [\n${folderRows.join(',\n')}\n]\n`
 
   await fs.mkdir(path.dirname(galleryOutputByGroup[group]), { recursive: true })
   await fs.writeFile(galleryOutputByGroup[group], output)
@@ -210,8 +312,8 @@ async function main() {
   }
 
   for (const group of Object.keys(groupFolders)) {
-    const galleries = await scanGroup(group)
-    await writeGalleries(group, galleries)
+    const data = await scanGroup(group)
+    await writeGalleries(group, data)
   }
 }
 
