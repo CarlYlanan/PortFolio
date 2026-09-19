@@ -250,6 +250,15 @@ function relativeFolderPath(groupRoot, folderPath) {
   return path.relative(groupRoot, folderPath).split(path.sep).join('/')
 }
 
+async function folderAddedAt(folderPath) {
+  try {
+    const stats = await fs.stat(folderPath)
+    return new Date(stats.birthtimeMs || stats.mtimeMs).toISOString()
+  } catch {
+    return new Date(0).toISOString()
+  }
+}
+
 async function scanGroup(group) {
   const groupRoot = path.join(mediaRoot, group)
 
@@ -281,6 +290,7 @@ async function scanGroup(group) {
       title: name,
       section: relative === '' ? group : relative.split('/')[0],
       order: folderOrder(name),
+      addedAt: await folderAddedAt(folderPath),
       count: items.length,
     })
   }
@@ -297,7 +307,7 @@ async function writeGalleries(group, data) {
     return `  ${JSON.stringify(folder)}: [\n${itemRows.join(',\n')}\n  ]`
   })
 
-  const folderRows = folders.map((folder) => `    { key: ${JSON.stringify(folder.key)}, path: ${JSON.stringify(folder.path)}, name: ${JSON.stringify(folder.name)}, title: ${JSON.stringify(folder.title)}, section: ${JSON.stringify(folder.section)}, order: ${folder.order === null ? 'null' : folder.order}, count: ${folder.count} }`)
+  const folderRows = folders.map((folder) => `    { key: ${JSON.stringify(folder.key)}, path: ${JSON.stringify(folder.path)}, name: ${JSON.stringify(folder.name)}, title: ${JSON.stringify(folder.title)}, section: ${JSON.stringify(folder.section)}, order: ${folder.order === null ? 'null' : folder.order}, count: ${folder.count}, addedAt: ${JSON.stringify(folder.addedAt)} }`)
 
   const output = `import type { GalleryItem, GeneratedGalleryFolder } from '../../types'\n\nexport const generatedLocationGalleries: Record<string, GalleryItem[]> = {\n${paths.join(',\n')}\n}\n\nexport const generatedGalleryFolders: GeneratedGalleryFolder[] = [\n${folderRows.join(',\n')}\n]\n`
 

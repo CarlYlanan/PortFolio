@@ -6,7 +6,7 @@ export interface ReferenceLink { title: string; url: string }
 export interface BulletItem { item: string; usage: string; url?: string }
 export type BulletEntry = string | BulletItem
 export interface GalleryItem { title?: string; src: string; alt?: string; aspectRatio?: string; folder?: string; capturedAt?: string; link?: string }
-export interface GeneratedGalleryFolder { key: string; path: string; name: string; title: string; section: string; order: number | null; count: number }
+export interface GeneratedGalleryFolder { key: string; path: string; name: string; title: string; section: string; order: number | null; count: number; addedAt: string }
 export interface GalleryGroup { id: string; title: string; mediaFolder?: string; items: GalleryItem[]; sortBy?: 'date' | 'name' | 'custom' }
 export interface ContentSection { id: string; title: string; body: string; bullets?: BulletEntry[]; references?: ReferenceLink[]; rootLink?: ReferenceLink; galleries?: GalleryGroup[] }
 export interface StandardTabContent {

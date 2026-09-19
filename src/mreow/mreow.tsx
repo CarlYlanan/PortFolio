@@ -63,14 +63,12 @@ export function MreowCarousel({ items, mediaFolder = '/media', title = 'Gallery'
                   <div className="mreow-frame">
                     <img className="mreow-image" alt={item.alt ?? caption} src={src} />
                   </div>
-                  <figcaption className="mreow-caption">{caption}</figcaption>
                 </a>
               ) : (
                 <button className="mreow-open" onClick={() => setLightbox({ mediaFolder, items: sortedItems })} type="button">
                   <div className="mreow-frame">
                     <img className="mreow-image" alt={item.alt ?? caption} src={src} />
                   </div>
-                  <figcaption className="mreow-caption">{caption}</figcaption>
                 </button>
               )}
             </figure>
@@ -95,7 +93,6 @@ export function MreowCarousel({ items, mediaFolder = '/media', title = 'Gallery'
                         <div className="mreow-modal-frame">
                           <img className="mreow-modal-image" alt={image.alt ?? caption} src={publicAssetUrl(lightbox.mediaFolder, image.src)} />
                         </div>
-                        <figcaption className="mreow-modal-caption">{caption}</figcaption>
                       </a>
                     ) : (
                       <button className="mreow-modal-open" onClick={() => {
@@ -105,7 +102,6 @@ export function MreowCarousel({ items, mediaFolder = '/media', title = 'Gallery'
                         <div className="mreow-modal-frame">
                           <img className="mreow-modal-image" alt={image.alt ?? caption} src={publicAssetUrl(lightbox.mediaFolder, image.src)} />
                         </div>
-                        <figcaption className="mreow-modal-caption">{caption}</figcaption>
                       </button>
                     )}
                   </figure>
@@ -127,7 +123,6 @@ export function MreowCarousel({ items, mediaFolder = '/media', title = 'Gallery'
               <div className="mreow-focus-frame">
                 <img className="mreow-focus-image" alt={focusedImage.item.alt ?? displayTitle(focusedImage.item)} src={publicAssetUrl(focusedImage.mediaFolder, focusedImage.item.src)} />
               </div>
-              <figcaption className="mreow-focus-caption">{displayTitle(focusedImage.item)}</figcaption>
             </div>
           </div>
         </div>

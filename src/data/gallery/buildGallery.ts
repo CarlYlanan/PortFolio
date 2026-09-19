@@ -1,4 +1,4 @@
-import type { ContentSection, GalleryGroup, GalleryItem, SectionMarker } from '../../types'
+import type { ContentSection, GalleryGroup, GalleryItem, GeneratedGalleryFolder, SectionMarker } from '../../types'
 import { generatedGalleryFolders, generatedLocationGalleries } from './generatedLocationGalleries'
 
 interface FolderOverride { section?: string; title?: string; pinned?: string[]; hidden?: boolean; order?: number }
@@ -44,10 +44,16 @@ function sectionRank(key: string): number {
 }
 
 export function buildGallery(): { sections: ContentSection[]; markers: SectionMarker[] } {
+  // Un-pinned carousels stack by addition order (folder creation time), newest at the bottom.
+  const addedTime = (folder: GeneratedGalleryFolder) => {
+    const parsed = Date.parse(folder.addedAt ?? '')
+    return Number.isNaN(parsed) ? Number.MAX_SAFE_INTEGER : parsed
+  }
+
   const folders = [...generatedGalleryFolders].sort((a, b) => {
     const left = OVERRIDES[a.key]?.order ?? a.order ?? Number.MAX_SAFE_INTEGER
     const right = OVERRIDES[b.key]?.order ?? b.order ?? Number.MAX_SAFE_INTEGER
-    return left - right || a.title.localeCompare(b.title)
+    return left - right || addedTime(a) - addedTime(b) || a.title.localeCompare(b.title)
   })
 
   const groupsBySection = new Map<string, GalleryGroup[]>()

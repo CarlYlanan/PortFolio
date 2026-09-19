@@ -15,6 +15,25 @@ export const generatedLocationGalleries: Record<string, GalleryItem[]> = {
     { title: "Sports-badminton.jpg", src: "badminton.jpg", alt: "Sports trip image", aspectRatio: "3024 / 4032", folder: "favourites/sports", capturedAt: "2026-09-18T10:07:15.152Z" },
     { title: "Sports-bowling.jpg", src: "bowling.jpg", alt: "Sports trip image", aspectRatio: "3024 / 4032", folder: "favourites/sports", capturedAt: "2026-09-18T10:07:15.153Z" }
   ],
+  "travels/NZ {2021 - 2022}": [
+    { title: "NZ 2021 2022-IMG_0150.jpg", src: "IMG_0150.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "4032 / 3024", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:08.680Z" },
+    { title: "NZ 2021 2022-IMG_0155.jpg", src: "IMG_0155.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:09.034Z" },
+    { title: "NZ 2021 2022-IMG_0162.jpg", src: "IMG_0162.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:09.305Z" },
+    { title: "NZ 2021 2022-IMG_0163.jpg", src: "IMG_0163.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:09.551Z" },
+    { title: "NZ 2021 2022-IMG_0166.jpg", src: "IMG_0166.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:09.896Z" },
+    { title: "NZ 2021 2022-IMG_0170.jpg", src: "IMG_0170.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:10.171Z" },
+    { title: "NZ 2021 2022-IMG_0173.jpg", src: "IMG_0173.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:10.488Z" },
+    { title: "NZ 2021 2022-IMG_0175.jpg", src: "IMG_0175.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:10.774Z" },
+    { title: "NZ 2021 2022-IMG_0178.jpg", src: "IMG_0178.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:11.073Z" },
+    { title: "NZ 2021 2022-IMG_0491.jpg", src: "IMG_0491.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:11.344Z" },
+    { title: "NZ 2021 2022-IMG_0492.jpg", src: "IMG_0492.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:11.609Z" },
+    { title: "NZ 2021 2022-IMG_0493.jpg", src: "IMG_0493.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:11.891Z" },
+    { title: "NZ 2021 2022-IMG_0501.jpg", src: "IMG_0501.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:12.233Z" },
+    { title: "NZ 2021 2022-IMG_0505.jpg", src: "IMG_0505.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:12.618Z" },
+    { title: "NZ 2021 2022-IMG_0507.jpg", src: "IMG_0507.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:12.935Z" },
+    { title: "NZ 2021 2022-IMG_0508.jpg", src: "IMG_0508.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:13.208Z" },
+    { title: "NZ 2021 2022-IMG_0524.jpg", src: "IMG_0524.jpg", alt: "NZ 2021 2022 trip image", aspectRatio: "3024 / 4032", folder: "travels/NZ {2021 - 2022}", capturedAt: "2026-09-19T08:13:13.571Z" }
+  ],
   "travels/japan {21 Nov 2025 - 27 Nov 2025}": [
     { title: "Japan 21 Nov 2025 27 Nov 2025-IMG_2404.JPG", src: "IMG_2404.JPG", alt: "Japan 21 Nov 2025 27 Nov 2025 trip image", aspectRatio: "4032 / 3024", folder: "travels/japan {21 Nov 2025 - 27 Nov 2025}", capturedAt: "2026-09-18T10:07:15.091Z" },
     { title: "Japan 21 Nov 2025 27 Nov 2025-IMG_2406.JPG", src: "IMG_2406.JPG", alt: "Japan 21 Nov 2025 27 Nov 2025 trip image", aspectRatio: "4032 / 3024", folder: "travels/japan {21 Nov 2025 - 27 Nov 2025}", capturedAt: "2026-09-18T10:07:15.098Z" },
@@ -112,10 +131,11 @@ export const generatedLocationGalleries: Record<string, GalleryItem[]> = {
 }
 
 export const generatedGalleryFolders: GeneratedGalleryFolder[] = [
-    { key: "favourites", path: "favourites", name: "favourites", title: "favourites", section: "favourites", order: null, count: 4 },
-    { key: "favourites/games", path: "favourites/games", name: "games", title: "games", section: "favourites", order: null, count: 2 },
-    { key: "favourites/sports", path: "favourites/sports", name: "sports", title: "sports", section: "favourites", order: null, count: 2 },
-    { key: "travels/japan {21 Nov 2025 - 27 Nov 2025}", path: "travels/japan {21 Nov 2025 - 27 Nov 2025}", name: "japan {21 Nov 2025 - 27 Nov 2025}", title: "japan {21 Nov 2025 - 27 Nov 2025}", section: "travels", order: null, count: 26 },
-    { key: "travels/japan {6 Sep 2024 - 14 Sep 2024}", path: "travels/japan {6 Sep 2024 - 14 Sep 2024}", name: "japan {6 Sep 2024 - 14 Sep 2024}", title: "japan {6 Sep 2024 - 14 Sep 2024}", section: "travels", order: null, count: 53 },
-    { key: "travels/sydney {28 Nov 2025 - 3 Dec 2025}", path: "travels/sydney {28 Nov 2025 - 3 Dec 2025}", name: "sydney {28 Nov 2025 - 3 Dec 2025}", title: "sydney {28 Nov 2025 - 3 Dec 2025}", section: "travels", order: null, count: 9 }
+    { key: "favourites", path: "favourites", name: "favourites", title: "favourites", section: "favourites", order: null, count: 4, addedAt: "2026-09-18T10:07:14.974Z" },
+    { key: "favourites/games", path: "favourites/games", name: "games", title: "games", section: "favourites", order: null, count: 2, addedAt: "2026-09-18T10:07:14.975Z" },
+    { key: "favourites/sports", path: "favourites/sports", name: "sports", title: "sports", section: "favourites", order: null, count: 2, addedAt: "2026-09-19T03:19:06.408Z" },
+    { key: "travels/NZ {2021 - 2022}", path: "travels/NZ {2021 - 2022}", name: "NZ {2021 - 2022}", title: "NZ {2021 - 2022}", section: "travels", order: null, count: 17, addedAt: "2026-09-19T03:14:44.826Z" },
+    { key: "travels/japan {21 Nov 2025 - 27 Nov 2025}", path: "travels/japan {21 Nov 2025 - 27 Nov 2025}", name: "japan {21 Nov 2025 - 27 Nov 2025}", title: "japan {21 Nov 2025 - 27 Nov 2025}", section: "travels", order: null, count: 26, addedAt: "2026-09-18T10:07:15.085Z" },
+    { key: "travels/japan {6 Sep 2024 - 14 Sep 2024}", path: "travels/japan {6 Sep 2024 - 14 Sep 2024}", name: "japan {6 Sep 2024 - 14 Sep 2024}", title: "japan {6 Sep 2024 - 14 Sep 2024}", section: "travels", order: null, count: 53, addedAt: "2026-09-18T10:07:14.975Z" },
+    { key: "travels/sydney {28 Nov 2025 - 3 Dec 2025}", path: "travels/sydney {28 Nov 2025 - 3 Dec 2025}", name: "sydney {28 Nov 2025 - 3 Dec 2025}", title: "sydney {28 Nov 2025 - 3 Dec 2025}", section: "travels", order: null, count: 9, addedAt: "2026-09-18T10:07:15.153Z" }
 ]
