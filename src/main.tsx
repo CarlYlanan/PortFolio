@@ -17,6 +17,14 @@ if (splash) {
       return
     }
     dismissed = true
+
+    // A missing gif skips the splash entirely - no blank overlay, no fade.
+    const img = splash.querySelector('img')
+    if (!img || (img.complete && img.naturalWidth === 0)) {
+      splash.remove()
+      return
+    }
+
     splash.classList.add('splash-hide')
     window.setTimeout(() => splash.remove(), 700)
   }
