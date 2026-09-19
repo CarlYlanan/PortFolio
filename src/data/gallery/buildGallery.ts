@@ -74,7 +74,7 @@ export function buildGallery(): { sections: ContentSection[]; markers: SectionMa
       title: override.title ?? folder.title,
       mediaFolder: folder.path === '' ? '/media/gallery' : `/media/gallery/${folder.path}`,
       items: override.pinned ? withPinnedFirst(items, override.pinned) : items,
-      sortBy: override.pinned ? 'custom' : 'name',
+      sortBy: override.pinned ? 'custom' : 'date',
     }
 
     const section = override.section ?? folder.section

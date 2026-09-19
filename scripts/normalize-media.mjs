@@ -150,6 +150,118 @@ async function collectFolders(sourceDir) {
   return folders
 }
 
+// Minimal EXIF reader: pulls the capture date straight out of JPEG metadata
+// so sorting works on any machine without external tools.
+function readExifCaptureDate(buffer) {
+  try {
+    if (buffer.length < 12 || buffer[0] !== 0xff || buffer[1] !== 0xd8) {
+      return null
+    }
+
+    let offset = 2
+    while (offset + 4 <= buffer.length) {
+      if (buffer[offset] !== 0xff) {
+        offset += 1
+        continue
+      }
+
+      const marker = buffer[offset + 1]
+      if (marker === 0xd8 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) {
+        offset += 2
+        continue
+      }
+      if (marker === 0xda || marker === 0xd9) {
+        break
+      }
+
+      const segmentLength = buffer.readUInt16BE(offset + 2)
+      if (marker === 0xe1 && segmentLength >= 8 && buffer.toString('latin1', offset + 4, offset + 8) === 'Exif') {
+        const date = readExifDateFromTiff(buffer, offset + 10)
+        if (date) {
+          return date
+        }
+      }
+
+      offset += 2 + segmentLength
+    }
+  } catch {
+    // malformed EXIF - fall back to file dates
+  }
+
+  return null
+}
+
+function readExifDateFromTiff(buffer, tiffStart) {
+  if (tiffStart + 8 > buffer.length) {
+    return null
+  }
+
+  const byteOrder = buffer.toString('latin1', tiffStart, tiffStart + 2)
+  const little = byteOrder === 'II'
+  if (!little && byteOrder !== 'MM') {
+    return null
+  }
+
+  const read16 = (offset) => (little ? buffer.readUInt16LE(offset) : buffer.readUInt16BE(offset))
+  const read32 = (offset) => (little ? buffer.readUInt32LE(offset) : buffer.readUInt32BE(offset))
+  const dateAt = (entryOffset) => {
+    const type = read16(entryOffset + 2)
+    const count = read32(entryOffset + 4)
+    if (type !== 2 || count < 19) {
+      return null
+    }
+    const valueOffset = count <= 4 ? entryOffset + 8 : tiffStart + read32(entryOffset + 8)
+    if (valueOffset + 19 > buffer.length) {
+      return null
+    }
+    const raw = buffer.toString('latin1', valueOffset, valueOffset + 19)
+    const match = raw.match(/^(\d{4}):(\d{2}):(\d{2}) (\d{2}:\d{2}:\d{2})$/)
+    return match ? `${match[1]}-${match[2]}-${match[3]}T${match[4]}` : null
+  }
+  const scanIfd = (ifdOffset) => {
+    if (ifdOffset < 0 || ifdOffset + 2 > buffer.length) {
+      return null
+    }
+    const entryCount = read16(ifdOffset)
+    let subIfd = null
+    let original = null
+    let digitized = null
+    let modify = null
+    for (let index = 0; index < entryCount; index += 1) {
+      const entryOffset = ifdOffset + 2 + index * 12
+      if (entryOffset + 12 > buffer.length) {
+        break
+      }
+      const tag = read16(entryOffset)
+      if (tag === 0x8769) {
+        subIfd = tiffStart + read32(entryOffset + 8)
+      } else if (tag === 0x9003 && !original) {
+        original = dateAt(entryOffset)
+      } else if (tag === 0x9004 && !digitized) {
+        digitized = dateAt(entryOffset)
+      } else if (tag === 0x0132 && !modify) {
+        modify = dateAt(entryOffset)
+      }
+    }
+    return { subIfd, original, digitized, modify }
+  }
+
+  const ifd0 = scanIfd(tiffStart + read32(tiffStart + 4))
+  if (!ifd0) {
+    return null
+  }
+
+  let date = ifd0.original ?? ifd0.digitized
+  if (!date && ifd0.subIfd !== null) {
+    const exifIfd = scanIfd(ifd0.subIfd)
+    if (exifIfd) {
+      date = exifIfd.original ?? exifIfd.digitized ?? exifIfd.modify
+    }
+  }
+
+  return date ?? ifd0.modify ?? null
+}
+
 async function normalizeFolder(sourceDir, label, folder) {
   try {
     await fs.access(sourceDir)
@@ -199,13 +311,14 @@ async function normalizeFolder(sourceDir, label, folder) {
       await removeSidecarOutputs(sourceDir, outputName)
 
       const mtime = (await fs.stat(output)).mtimeMs
+      const captured = (await readExifCaptureDate(await fs.readFile(output))) ?? new Date(mtime).toISOString()
       gallery.push({
         title: `${label}-${outputName}`,
         src: outputName,
         alt: `${label} trip image`,
         aspectRatio: probeAspectRatio(output),
         folder,
-        capturedAt: new Date(mtime).toISOString(),
+        capturedAt: captured,
       })
 
       continue
@@ -214,13 +327,14 @@ async function normalizeFolder(sourceDir, label, folder) {
     if (webImageExt.has(ext)) {
       copied += 1
       const mtime = (await fs.stat(input)).mtimeMs
+      const captured = (await readExifCaptureDate(await fs.readFile(input))) ?? new Date(mtime).toISOString()
       gallery.push({
         title: `${label}-${file.name}`,
         src: file.name,
         alt: `${label} trip image`,
         aspectRatio: probeAspectRatio(input),
         folder,
-        capturedAt: new Date(mtime).toISOString(),
+        capturedAt: captured,
       })
     } else {
       ignored += 1
