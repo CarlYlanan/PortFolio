@@ -4,6 +4,7 @@ import { ArticlePage } from './articles/ArticlePage'
 import { ArticleSections } from './articles/ArticleSections'
 import { contentByTab, navigationTabs } from './data/content'
 import { MreowCarousel } from './mreow/mreow'
+import { InstagramFeed } from './social/InstagramFeed'
 import { navigate, useRoute } from './router'
 import type { ArticlesTabContent, SectionMarker, SocialTabContent, StandardTabContent, TabContent, TabId } from './types'
 
@@ -96,6 +97,7 @@ function App() {
                     : isSocialContent(content)
                     ? (
                       <>
+                        <InstagramFeed />
                         {content.instagram && content.instagram.handle !== '' && (
                           <article className="content-section instagram-entry" id={content.instagram.id} key={content.instagram.id}>
                             {content.instagram.posts.length > 0 && (
