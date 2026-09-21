@@ -3,8 +3,6 @@ import './App.css'
 import { ArticlePage } from './articles/ArticlePage'
 import { ArticleSections } from './articles/ArticleSections'
 import { contentByTab, navigationTabs } from './data/content'
-import { MreowCarousel } from './mreow/mreow'
-import { InstagramFeed } from './social/InstagramFeed'
 import { navigate, useRoute } from './router'
 import type { ArticlesTabContent, SectionMarker, SocialTabContent, StandardTabContent, TabContent, TabId } from './types'
 
@@ -97,19 +95,18 @@ function App() {
                     : isSocialContent(content)
                     ? (
                       <>
-                        <InstagramFeed />
-                        {content.instagram && content.instagram.handle !== '' && (
-                          <article className="content-section instagram-entry" id={content.instagram.id} key={content.instagram.id}>
-                            {content.instagram.posts.length > 0 && (
-                              <MreowCarousel items={content.instagram.posts} mediaFolder="/media/social/instagram" sortOrder="desc" title="Instagram" visibleBoxes={5} />
+                        {content.socials.map((entry) => (
+                          <article className="content-section friend-entry" id={entry.id} key={entry.id}>
+                            <h2>{entry.name}</h2>
+                            {entry.url && (
+                              <a href={entry.url} rel="noreferrer" target="_blank">↳ {entry.url}</a>
                             )}
-                          </article>
-                        )}
-                        {content.socials.map((friend) => (
-                          <article className="content-section friend-entry" id={friend.id} key={friend.id}>
-                            <h2>{friend.name}</h2>
-                            <a href={friend.url} rel="noreferrer" target="_blank">↳ {friend.url}</a>
-                            <p>↳ {friend.reason}</p>
+                            {entry.links?.map((link) => (
+                              <a href={link.url} key={link.url} rel="noreferrer" target="_blank">↳ {link.title}</a>
+                            ))}
+                            {entry.body && entry.body.trim() !== '' && (
+                              <p>{entry.body}</p>
+                            )}
                           </article>
                         ))}
                       </>

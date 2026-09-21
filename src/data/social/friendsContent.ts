@@ -1,15 +1,21 @@
 import type { SocialTabContent } from "../../types"
 
 export const friendsContent: SocialTabContent = {
-  id: "social", eyebrow: "Social / 04", title: "People worth visiting.", summary: "A short list of thoughtful people and places on the web.",
+  id: "social", eyebrow: "Social / 04", title: "Socials ", summary: "{Mine and the goats}",
   socials: [
-    { id: "user1", name: "User1", url: "https://example.com/user1", reason: "For making generous notes and sharing the process." },
-    { id: "user2", name: "User2", url: "https://example.com/user2", reason: "For a distinctive point of view and excellent projects." },
-    { id: "user3", name: "User3", url: "https://example.com/user3", reason: "For curiosity, kindness, and consistently good links." },
+    {
+      id: "me", name: "Carl Adrian Ylanan", body: "",
+      links: [
+        { title: "LinkedIn", url: "https://www.linkedin.com/in/carl-adrian-ylanan-a7b18b2bb/" },
+        { title: "GitHub", url: "https://github.com/CarlYlanan" },
+        { title: "Contact Email", url: "mailto:cylanan05@gmail.com" },
+      ],
+    },
+    { id: "anton", name: "Anton G", url: "https://www.antga.dev/" },
+    { id: "friend2", name: "Friend2", url: "https://example.com/friend2" },
   ], markers: [
-    { id: "instagram-feed", label: "01 // instagram" },
-    { id: "user1", label: "02 // user1" },
-    { id: "user2", label: "03 // user2" },
-    { id: "user3", label: "04 // user3" },
+    { id: "me", label: "01 // me" },
+    { id: "anton", label: "02 // anton" },
+    { id: "friend2", label: "03 // friend2" },
   ],
 }

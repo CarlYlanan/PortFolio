@@ -64,10 +64,6 @@ h1 { max-width: none; margin: 26px 0 18px; font-size: clamp(28px, 4vw, 48px); fo
 .friend-entry h2 { margin: 0; font-size: 14px; font-weight: 700; }
 .friend-entry a, .friend-entry p { display: block; margin-top: 6px !important; padding-left: 16px; color: var(--muted); text-decoration: none; }
 .friend-entry a:hover { color: var(--ink); text-decoration: underline; }
-.instagram-entry .mreow-carousel { margin-top: 22px; }
-.instagram-profile-link { display: inline-block; margin-top: 14px; color: var(--ink); font-size: 13px; font-weight: 700; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: color .24s ease; }
-.instagram-profile-link:hover { color: var(--muted); }
-.instagram-entry .mreow-carousel { margin-top: 6px; }
 .section-index { position: sticky; top: 64px; height: fit-content; border-left: 1px solid var(--line); padding: 4px 0 4px 16px; }
 .index-heading { margin-bottom: 14px; }
 .index-link { display: block; width: fit-content; margin: 8px 0; color: var(--muted); text-decoration: none; transition: color .2s ease, padding-left .2s ease; }
@@ -110,15 +106,3 @@ h1 { max-width: none; margin: 26px 0 18px; font-size: clamp(28px, 4vw, 48px); fo
   .index-heading { display: inline; margin-right: 12px; }
   .index-link { display: inline-block; margin: 0 12px 0 0; }
 }
-
-/* Instagram feed (Social tab) */
-.instagram-feed-section { scroll-margin-top: 80px; }
-.ig-feed-handle { display: inline-block; margin-top: 14px; color: var(--ink); font-size: 15px; font-weight: 700; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.ig-feed-handle:hover { color: var(--muted); }
-.ig-feed-empty { margin: 18px 0 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
-.ig-feed-scroll { max-height: 70vh; margin-top: 18px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
-.ig-feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
-.ig-feed-tile { display: block; padding: 0; border: 0; background: transparent; }
-.ig-feed-img { display: block; width: 100%; height: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
-a.ig-feed-tile:hover .ig-feed-img { opacity: .85; }
-.ig-feed-note { margin: 12px 0 0; color: var(--muted); font-size: 11px; letter-spacing: .04em; }

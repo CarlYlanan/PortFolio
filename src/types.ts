@@ -17,19 +17,12 @@ export interface StandardTabContent {
   sections: ContentSection[]
   markers: SectionMarker[]
 }
-export interface SocialEntry { id: string; name: string; url: string; reason: string }
-export interface InstagramContent {
-  id: string
-  handle: string
-  profileUrl: string
-  posts: GalleryItem[]
-}
+export interface SocialEntry { id: string; name: string; url?: string; links?: ReferenceLink[]; body?: string }
 export interface SocialTabContent {
   id: 'social'
   eyebrow: string
   title: string
   summary: string
-  instagram?: InstagramContent
   socials: SocialEntry[]
   markers: SectionMarker[]
 }
