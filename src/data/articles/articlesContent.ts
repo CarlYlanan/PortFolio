@@ -1,8 +1,7 @@
-import type { ArticlesTabContent } from '../../types'
+import type { Article, ArticlesTabContent } from '../../types'
+import { generatedArticles } from './generatedArticles'
 
-export const articlesContent: ArticlesTabContent = {
-  id: 'larper', eyebrow: 'Articles / 02', title: 'Big Words', summary: 'Things I do to some depth',
-  articles: [
+const authoredArticles: Article[] = [
     {
       id: 'linux-desktop', title: 'Linux Desktop', updated: '2026-09-11',
       summary: 'Distributions, desktop environments, gaming, the terminal, and building a desktop that feels like your own.',
@@ -167,5 +166,17 @@ export const articlesContent: ArticlesTabContent = {
         },
       ],
     },
-  ],
+]
+
+function articleTime(article: Article): number {
+  const parsed = article.updated ? Date.parse(article.updated) : Number.NaN
+  return Number.isNaN(parsed) ? Number.NEGATIVE_INFINITY : parsed
+}
+
+// Newest first: freshly generated .txt posts rise to the top and push older articles down.
+const articles = [...generatedArticles, ...authoredArticles].sort((left, right) => articleTime(right) - articleTime(left))
+
+export const articlesContent: ArticlesTabContent = {
+  id: 'larper', eyebrow: 'Articles / 02', title: 'Big Words', summary: 'Things I do to some depth',
+  articles,
 }
